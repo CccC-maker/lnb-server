@@ -1,46 +1,40 @@
 package com.example.lnb.controller;
 
-import com.example.lnb.entity.Result;
-import com.example.lnb.entity.User;
-import com.example.lnb.mapper.UserMapper;
+import com.example.lnb.entity.Users;
+import com.example.lnb.entity.dto.Result;
 import com.example.lnb.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
-import org.thymeleaf.util.StringUtils;
-
-import javax.annotation.Resource;
-import javax.servlet.http.HttpSession;
-import java.util.List;
 
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
-    @Resource
-    UserMapper userMapper;
+    @Autowired
+    private UserService userService;
 
-    @GetMapping("all")
-    public List<User> getUser(){
-        return userMapper.findAll();
+
+    /**
+     * 注册
+     * @param users
+     * @return
+     */
+    @PostMapping("/register")
+    public Result register(@RequestBody Users users){
+        return userService.register(users);
     }
 
-    @RequestMapping("/login")
-    public String login(@RequestParam("phone") String phone,
-                        @RequestParam("password") String password){
-        //具体的业务
-        if(!StringUtils.isEmpty(phone) && "123456".equals(password)) {
-            return "sucessful";
-        }else{
-            //告诉用户登录失败
-            return "false";
-        }
+    /**
+     * 登录
+     * @param users
+     * @return
+     */
+    @PostMapping("/login")
+    public Result login(@RequestBody Users users){
+        return userService.login(users);
     }
-
 
 }
