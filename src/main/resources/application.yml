@@ -1,0 +1,12 @@
+spring:
+  datasource:
+      driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+      url: jdbc:sqlserver://120.48.5.10;DatabaseName=DB
+      username: sa
+      password: Lnb123456
+
+server:
+  port: 8081
+
+
+
